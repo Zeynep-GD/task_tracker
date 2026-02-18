@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  space-db:
+    image: postgis/postgis:15-3.3
+    container_name: task_tracker
+    ports:
+      - "5438:5432"
+    restart: always
+    environment:
+      POSTGRES_DB: task_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - task_tracker:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8888:8080"
+
+volumes:
+  task_tracker:
